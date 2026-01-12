@@ -11,7 +11,10 @@ export const protect=async(req,res,next)=>{
 
     try{
         const decoded=jwt.verify(token,process.env.JWT_SECRET);
-        req.user=decoded.userId;
+        console.log("DECODED JWT:", decoded);
+        req.user={
+            id: decoded.userId
+        };
     }catch(error){
         return res.status(401).json({message:'Token is not valid'});
     }

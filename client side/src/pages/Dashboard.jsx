@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+import React from 'react'
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ApiCard from '../components/ApiCard.jsx';
@@ -15,6 +15,7 @@ const [showAddApi,setShowAddApi]=useState(false);
 const [name,setName]=useState('');
 const [limit,setLimit]=useState('');
 const [windowSize,setWindowSize]=useState('');
+const [baseUrl,setBaseUrl]=useState('');
 const [timeUnit, setTimeUnit] = useState("seconds");
 
 const token=localStorage.getItem('token');
@@ -37,7 +38,7 @@ useEffect(()=>{
 
 //simulating API use
 const useApi=async(apiId)=>{
-  const res=await fetch(`http://localhost:7000/api/apis/use/${apiId}`,{
+  const res=await fetch(`http://localhost:7000/api/apis/proxy/${apiId}`,{
     headers:{
       'Authorization':`Bearer ${token}`,  
 }
@@ -45,16 +46,34 @@ const useApi=async(apiId)=>{
 
   if(res.ok){
     fetchApis();
+    const data=await res.json();
+    console.log('API response data:', data);
+    alert('API request successful:\n'+"check console for response data");
   }
   else{
     const data=await res.json();
-    alert(data.message || 'Error using API');
+  
+    alert(data.message || 'API request failed');
     return ;
   }
 };
   //create new Api
 const onSubmit=async (e)=>{
   e.preventDefault();
+  if (!name || !baseUrl || !limit || !windowSize) {
+  alert("All fields are required");
+  return;
+}
+
+if (isNaN(limit) || isNaN(windowSize)) {
+  alert("Limit and window size must be numbers");
+  return;
+}
+ if (!token) {
+    alert("Please login again");
+    return;
+  }
+
 const convertToSeconds = (value, unit) => {
   if (unit === "minutes") return value * 60;
   if (unit === "hours") return value * 3600;
@@ -75,7 +94,8 @@ const windowSizeInSeconds = convertToSeconds(
     
     body:JSON.stringify({
       name,
-      limit:parseInt(limit),
+      baseUrl,
+      limit:Number(limit),
       windowSize:windowSizeInSeconds,
     }),
   });
@@ -84,6 +104,7 @@ const windowSizeInSeconds = convertToSeconds(
     setShowAddApi(false);
     setName('');
     setLimit('');
+    setBaseUrl('')
     setWindowSize('');
     fetchApis();
   }
@@ -114,9 +135,11 @@ const windowSizeInSeconds = convertToSeconds(
             name={name}
             limit={limit}
             windowSize={windowSize}
+            baseUrl={baseUrl}
             timeUnit={timeUnit}
             setName={setName}
             setLimit={setLimit}
+            setBaseUrl={setBaseUrl}
             setWindowSize={setWindowSize}
             setTimeUnit={setTimeUnit}
             onClose={() => setShowAddApi(false)}

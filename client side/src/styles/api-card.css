@@ -96,6 +96,35 @@
   border-radius: var(--radius-sm);
   display: inline-block;
 }
+.api-proxy-url {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  background: var(--secondary-bg);
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  word-break: break-all;
+}
+ .proxy-url{
+    font-weight: 600;
+    color: var(--text-primary);
+
+ }
+.copy-btn{
+    margin-left: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: color var(--transition-base);
+}
+
+.proxy-instruction{
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
 
 .api-card-actions {
   margin-top: var(--spacing-md);

@@ -1,8 +1,8 @@
 import '../styles/main.css';
 
-function AddApiModal({name,limit,timeUnit,windowSize,setName,setLimit,setWindowSize,setTimeUnit ,onClose,onSubmit}){
+function AddApiModal({name,limit,baseUrl,timeUnit,windowSize,setName,setLimit,setBaseUrl,setWindowSize,setTimeUnit ,onClose,onSubmit}){
     return(
-        <div className="modal-overlay" onClick={onClose} data-testid="modal-overlay">
+        <div className="modal-overlay" onClick={(e)=>{if(e.target === e.currentTarget) onClose()}} data-testid="modal-overlay">
             <div 
                 className="modal-content" 
                 onClick={(e) => e.stopPropagation()}
@@ -38,6 +38,23 @@ function AddApiModal({name,limit,timeUnit,windowSize,setName,setLimit,setWindowS
                         />
                     </div>
                     
+                    <div className='modal-form-group'>
+                        <label className="modal-form-label" htmlFor="api-base-url">
+                            Base URL
+                        </label>
+                        <input
+                            id="api-base-url"
+                            className="modal-form-input"
+                            value={baseUrl}
+                            onChange={(e) => setBaseUrl(e.target.value)}
+                            placeholder="e.g., https://api.github.com"
+                            type="text"
+                            required
+                            data-testid="api-base-url-input"
+                        />
+                    </div>
+
+
                     <div className="modal-form-group">
                         <label className="modal-form-label" htmlFor="api-limit">
                             Rate Limit

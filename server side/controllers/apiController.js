@@ -2,12 +2,13 @@ import ApiUsage from '../models/ApiUsage.js';
 
 export const createApi=async(req,res)=>{
     try{
-        const {name,limit,windowSize}=req.body;
+        const {name,limit,baseUrl,windowSize}=req.body;
 
         const api=await ApiUsage.create({
-            user:req.user,
+            user:req.user.id,
             name,
             limit,
+            baseUrl,
             windowSize
         });
 

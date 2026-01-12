@@ -24,6 +24,18 @@ const apiUsageSchema = new mongoose.Schema(
       default: 0,
       required: true,
     },
+    baseUrl:{
+      type:String,
+      required:true,
+    },
+    method:{
+      type:String,
+     default:"GET",
+    },
+    headers:{
+      type:Object,
+      default:{},
+    },
     windowStart: {
       type: Date,
       default: Date.now,

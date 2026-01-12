@@ -33,10 +33,9 @@ export const register=async(req,res)=>{
         res.status(201).json({message:'User registered successfully'});
         
     }catch (error) {
-  console.error("🔥 REGISTER ERROR FULL:", error);
-  return res.status(500).json({ message: error.message });
-}
-
+  console.error(" error in register controller:", error);
+  return res.status(500).json({ message:error.message });
+ }
 }
 
 

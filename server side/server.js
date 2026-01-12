@@ -15,7 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use('/api/auth',authRoutes);
 app.use('/api/apis',apiRoutes);
-app.use('/api/use/:apiId',apiRoutes);
+
+
 
 app.get('/',(req,res)=>{
     res.send('API Rate Limit Monitor Server is Running');
